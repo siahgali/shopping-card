@@ -8,15 +8,6 @@ public class User {
     private String emailId;
     private String password;
     private boolean enabled;
-    private Customer customer;
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
 
     public String getUserId() {
         return userId;

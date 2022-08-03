@@ -1,6 +1,15 @@
 package com.keep.calm.shopping.address;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.keep.calm.shopping.customer.Customer;
+import com.keep.calm.shopping.helper.JsonFileName;
+import com.keep.calm.shopping.helper.JsonHelper;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class Address {
 
@@ -10,8 +19,6 @@ public class Address {
     private String state;
     private String zipcode;
     private String country;
-
-
     private Customer customer;
 
     public Customer getCustomer() {
@@ -68,5 +75,24 @@ public class Address {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public void addAddress() {
+        JsonHelper.addObjectToJsonFile(JsonFileName.ADDRESS, this);
+    }
+
+     @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+
+        if (!(obj instanceof Address)) {
+            return false;
+        }
+        Address that = (Address) obj;
+        return new EqualsBuilder()
+                .append(this.addressId, that.addressId)
+                .isEquals();
     }
 }
