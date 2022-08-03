@@ -7,7 +7,6 @@ public class CartItem {
     private int quality;
     private double price;
     private Product product;
-    private Cart cart;
 
     public String getCartItemId() {
         return cartItemId;
@@ -39,13 +38,5 @@ public class CartItem {
 
     public void setProduct(Product product) {
         this.product = product;
-    }
-
-    public Cart getCart() {
-        return cart;
-    }
-
-    public void setCart(Cart cart) {
-        this.cart = cart;
     }
 }
