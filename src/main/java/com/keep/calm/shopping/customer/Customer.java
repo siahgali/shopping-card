@@ -2,6 +2,8 @@ package com.keep.calm.shopping.customer;
 
 import com.keep.calm.shopping.address.Address;
 import com.keep.calm.shopping.cart.Cart;
+import com.keep.calm.shopping.helper.JsonFileName;
+import com.keep.calm.shopping.helper.JsonHelper;
 import com.keep.calm.shopping.user.User;
 
 public class Customer {
@@ -76,5 +78,8 @@ public class Customer {
 
     public void setUsers(User users) {
         this.users = users;
+    }
+    public void addCustomer() {
+        JsonHelper.addObjectToJsonFile(JsonFileName.CUSTOMER, this);
     }
 }
