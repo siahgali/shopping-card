@@ -21,7 +21,7 @@ public class AddressTest {
     @Test
     public void should_addAddressToJsonFile_when_noError() {
         //Initial GIVEN
-        Address address = buildAddress();
+        Address address = buildAddress("Montreal");
 
         //WHEN
         address.addAddress();
@@ -32,11 +32,26 @@ public class AddressTest {
 
     }
 
-    private Address buildAddress() {
+    @Test
+    public void should_updateAddress() {
+        //Initial GIVEN
+        Address address = buildAddress("Montreal");
+        //WHEN
+        address.addAddress();
+
+        Address addressEntered = buildAddress("Cote saint-luc");
+
+        //address.update("1", addressEntered);
+
+        assertEquals("Cote saint luc", address.getCity());
+
+    }
+
+    private Address buildAddress(String city) {
         Address address = new Address();
         address.setAddress("René-Lévesque");
         address.setAddressId("1");
-        address.setCity("Montreal");
+        address.setCity(city);
         address.setCountry("Canada");
         address.setState("Quebec");
 
@@ -47,20 +62,11 @@ public class AddressTest {
         address.setCountry("Canada");
         address.setState("Quebec");
 
-        Customer customer = new Customer();
-        customer.setCustomerId("1");
-        customer.setCustomerPhone("514 518 4841");
-        customer.setBillingAddress(billingAddress);
-        customer.setShippingAddress(billingAddress);
-        customer.setFirstName("Ali");
-        customer.setLastName("Siahkali");
 
         Cart cart = new Cart();
         cart.setCartId("1");
         cart.setTotalPrice(100d);
 
-        customer.setCart(cart);
-        address.setCustomer(customer);
         return address;
     }
 
