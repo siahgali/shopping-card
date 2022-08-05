@@ -19,15 +19,6 @@ public class Address {
     private String state;
     private String zipcode;
     private String country;
-    private Customer customer;
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
 
     public String getAddressId() {
         return addressId;
