@@ -5,6 +5,7 @@ import com.keep.calm.shopping.cart.Cart;
 import com.keep.calm.shopping.helper.JsonFileName;
 import com.keep.calm.shopping.helper.JsonHelper;
 import com.keep.calm.shopping.user.User;
+import org.apache.commons.lang3.builder.EqualsBuilder;
 
 public class Customer {
     private String customerId;
@@ -81,5 +82,21 @@ public class Customer {
     }
     public void addCustomer() {
         JsonHelper.addObjectToJsonFile(JsonFileName.CUSTOMER, this);
+    }
+
+//    public void updateCustomer() { JsonHelper.updateObjectToJsonFile(JsonFileName.CUSTOMER, this);
+//    }
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+
+        if (!(obj instanceof Customer)) {
+            return false;
+        }
+        Customer that = (Customer) obj;
+        return new EqualsBuilder()
+                .append(this.customerId, that.customerId)
+                .isEquals();
     }
 }

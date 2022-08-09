@@ -1,18 +1,12 @@
 package com.keep.calm.shopping.helper;
 
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.keep.calm.shopping.address.Address;
-import com.keep.calm.shopping.customer.Customer;
-import com.keep.calm.shopping.product.Product;
-import com.keep.calm.shopping.user.User;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 public class JsonHelper<T> {
 
@@ -48,5 +42,25 @@ public class JsonHelper<T> {
             e.printStackTrace();
         }
         return objectList;
+    }
+
+//    public static <T> void updateObjectToJsonFile(JsonFileName filename, T javaObject) {
+////        ArrayList<T> objectList = JsonHelper.convertJsonFileToJavaObject(filename);
+////        Optional<T> objectFound = objectList.stream().filter(obj ->obj.equals(javaObject)).findFirst();
+////        objectFound.ifPresent(obFound ->{objectList.remove(objectFound);
+////                                            objectList.add(javaObject);});
+
+
+
+   // }
+    public static <T> void deleteObjectToJsonFile(JsonFileName filename, T javaObject) {
+        ArrayList<T> objectList = JsonHelper.convertJsonFileToJavaObject(filename);
+        Optional<T> objectFound = objectList.stream().filter(obj ->obj.equals(javaObject)).findFirst();
+        objectFound.ifPresent(obFound -> {
+            objectList.remove(objectFound);
+        });
+
+
+
     }
 }

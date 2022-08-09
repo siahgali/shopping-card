@@ -1,15 +1,9 @@
 package com.keep.calm.shopping.address;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.keep.calm.shopping.customer.Customer;
 import com.keep.calm.shopping.helper.JsonFileName;
 import com.keep.calm.shopping.helper.JsonHelper;
-import org.apache.commons.lang3.builder.EqualsBuilder;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 public class Address {
 
@@ -72,18 +66,41 @@ public class Address {
         JsonHelper.addObjectToJsonFile(JsonFileName.ADDRESS, this);
     }
 
-     @Override
-    public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
+    // @Override
+//    public boolean equals(Object obj) {
+//        if (obj == this) {
+//            return true;
+//        }
+//
+//        if (!(obj instanceof Address)) {
+//            return false;
+//        }
+//        Address that = (Address) obj;
+//        return new EqualsBuilder()
+//                .append(this.addressId, that.addressId)
+//                .isEquals();
+//    }
+
+
+    public void updateAddress() {
+
+        ArrayList<Address> objectList = JsonHelper.convertJsonFileToJavaObject(JsonFileName.ADDRESS);
+        for (Address address:objectList){
+            if(address.getAddressId().equals(this.getAddressId())){
+                objectList.remove(address);
+                objectList.add(this);
+            }
+
         }
 
-        if (!(obj instanceof Address)) {
-            return false;
-        }
-        Address that = (Address) obj;
-        return new EqualsBuilder()
-                .append(this.addressId, that.addressId)
-                .isEquals();
+
+
+
+
     }
+    public void deleteAddress() { JsonHelper.deleteObjectToJsonFile(JsonFileName.ADDRESS, this);
+    }
+
+
 }
+

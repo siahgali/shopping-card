@@ -1,13 +1,10 @@
 package com.keep.calm.shopping.address;
 
 import com.keep.calm.shopping.cart.Cart;
-import com.keep.calm.shopping.customer.Customer;
 import com.keep.calm.shopping.helper.JsonFileName;
 import com.keep.calm.shopping.helper.JsonHelper;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -18,34 +15,39 @@ public class AddressTest {
         JsonHelper.clearJsonFile(JsonFileName.ADDRESS);
     }
 
-    @Test
+ /*  @Test
     public void should_addAddressToJsonFile_when_noError() {
         //Initial GIVEN
-        Address address = buildAddress("Montreal");
+        Address address = buildAddress("salam");
 
         //WHEN
         address.addAddress();
+        //address.deleteAddress();
 
         //then
         List<Address> addressList = JsonHelper.convertJsonFileToJavaObject(JsonFileName.ADDRESS);
-        assertEquals(1, addressList.size());
+        assertEquals(0, addressList.size());
 
-    }
+    }*/
 
     @Test
     public void should_updateAddress() {
         //Initial GIVEN
         Address address = buildAddress("Montreal");
+        Address addressEntered = buildAddress("Toronto");
         //WHEN
         address.addAddress();
 
-        Address addressEntered = buildAddress("Cote saint-luc");
 
-        //address.update("1", addressEntered);
 
-        assertEquals("Cote saint luc", address.getCity());
+        addressEntered.updateAddress();
+      //  List<Address> addressList = JsonHelper.convertJsonFileToJavaObject(JsonFileName.ADDRESS);
+     //   assertEquals(2, addressList.size());
+
+        assertEquals("Toronto", address.getCity());
 
     }
+
 
     private Address buildAddress(String city) {
         Address address = new Address();
@@ -58,7 +60,7 @@ public class AddressTest {
         Address billingAddress = new Address();
         address.setAddress("René-Lévesque");
         address.setAddressId("1");
-        address.setCity("Montreal");
+        address.setCity(city);
         address.setCountry("Canada");
         address.setState("Quebec");
 
