@@ -90,7 +90,7 @@ public class Product {
     public void deleteProduct() throws IOException {
         final ObjectMapper objectMapper = new ObjectMapper();
         ArrayList<Product> objectList = new ArrayList();
-        String filename = "product.json";
+        String filename = JsonFileName.PRODUCT.getValue();
         String filePath = "src/main/resources/json/" + filename;
         Product[] obj = objectMapper.readValue(new FileReader( filePath), Product[].class);
         objectList = new ArrayList(Arrays.asList(obj));
