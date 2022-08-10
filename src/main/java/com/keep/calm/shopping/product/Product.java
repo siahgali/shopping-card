@@ -1,5 +1,16 @@
 package com.keep.calm.shopping.product;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.keep.calm.shopping.helper.JsonFileName;
+import com.keep.calm.shopping.helper.JsonHelper;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Product {
 
     private String productId;
@@ -15,6 +26,9 @@ public class Product {
     private double productPrice;
 
     private String unitStock;
+
+    public Product() throws IOException {
+    }
 
     // Getters and Setter
 
@@ -73,5 +87,30 @@ public class Product {
     public void setUnitStock(String unitStock) {
         this.unitStock = unitStock;
     }
+    public void addProduct() {
+        JsonHelper.addObjectToJsonFile(JsonFileName.PRODUCT,this);
+    }
+    //ArrayList<Product> productList = JsonHelper.convertJsonFileToJavaObject(JsonFileName.PRODUCT);
 
+    public void updateProduct(Product p) throws IOException {
+        final ObjectMapper objectMapper = new ObjectMapper();
+        ArrayList<Product> objectList = new ArrayList();
+        String filename = "product.json";
+        String filePath = "src/main/resources/json/" + filename;
+        Product[] obj = objectMapper.readValue(new FileReader( filePath), Product[].class);
+        objectList = new ArrayList(Arrays.asList(obj));
+
+        for (Product product : objectList) {
+            if (product.getProductId().equals(p.getProductId())) {
+                product.setProductName(p.getProductName());
+                product.setProductId(p.getProductId());
+                break;
+            }
+        }
+            JsonHelper.clearJsonFile(JsonFileName.PRODUCT);
+          for (Product product : objectList) {
+            product.addProduct();
+
+        }
+    }
 }
