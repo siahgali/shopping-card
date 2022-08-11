@@ -93,13 +93,7 @@ public class Product {
     //ArrayList<Product> productList = JsonHelper.convertJsonFileToJavaObject(JsonFileName.PRODUCT);
 
     public void updateProduct(Product p) throws IOException {
-        final ObjectMapper objectMapper = new ObjectMapper();
-        ArrayList<Product> objectList = new ArrayList();
-        String filename = "product.json";
-        String filePath = "src/main/resources/json/" + filename;
-        Product[] obj = objectMapper.readValue(new FileReader( filePath), Product[].class);
-        objectList = new ArrayList(Arrays.asList(obj));
-
+        ArrayList<Product> objectList = JsonHelper.convertJsonFileToJavaObject(JsonFileName.PRODUCT);
         for (Product product : objectList) {
             if (product.getProductId().equals(p.getProductId())) {
                 product.setProductName(p.getProductName());
