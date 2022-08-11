@@ -8,10 +8,13 @@ import com.keep.calm.shopping.product.Product;
 import com.keep.calm.shopping.user.User;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class JsonHelper<T> {
@@ -38,15 +41,28 @@ public class JsonHelper<T> {
             e.printStackTrace();
         }
     }
-    public static ArrayList convertJsonFileToJavaObject(JsonFileName filename) {
-        ObjectMapper mapper = new ObjectMapper();
-        ArrayList objectList = new ArrayList();
+    public static ArrayList convertJsonFileToJavaObject(JsonFileName filename) throws IOException {
+        final ObjectMapper objectMapper = new ObjectMapper();
+        ArrayList<Object> objectList = new ArrayList();
         String filePath = "src/main/resources/json/" + filename.getValue();
-        try {
-            objectList = mapper.readValue(new File( filePath), ArrayList.class);
-        } catch (IOException e) {
-            e.printStackTrace();
+        Object[] obj = objectList.toArray(new Object[0]);
+        switch(filename) {
+            case ADDRESS:
+                 obj = objectMapper.readValue(new FileReader( filePath),Address[].class);
+                break;
+            case PRODUCT:
+                 obj = objectMapper.readValue(new FileReader( filePath),Product[].class);
+                break;
+            case CUSTOMER:
+                obj = objectMapper.readValue(new FileReader( filePath),Customer[].class);
+                break;
+            case USER:
+                obj = objectMapper.readValue(new FileReader( filePath),User[].class);
+                break;
+            default:
+                // code block
         }
+        objectList = new ArrayList(Arrays.asList(obj));
+
         return objectList;
-    }
-}
+}}

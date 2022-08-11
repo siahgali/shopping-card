@@ -7,6 +7,8 @@ import com.keep.calm.shopping.helper.JsonHelper;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -19,7 +21,7 @@ public class AddressTest {
     }
 
     @Test
-    public void should_addAddressToJsonFile_when_noError() {
+    public void should_addAddressToJsonFile_when_noError() throws IOException {
         //Initial GIVEN
         Address address = buildAddress("Montreal");
 
@@ -27,7 +29,7 @@ public class AddressTest {
         address.addAddress();
 
         //then
-        List<Address> addressList = JsonHelper.convertJsonFileToJavaObject(JsonFileName.ADDRESS);
+        ArrayList addressList = JsonHelper.convertJsonFileToJavaObject(JsonFileName.ADDRESS);
         assertEquals(1, addressList.size());
 
     }

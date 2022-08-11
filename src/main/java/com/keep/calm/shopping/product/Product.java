@@ -1,14 +1,10 @@
 package com.keep.calm.shopping.product;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.keep.calm.shopping.helper.JsonFileName;
 import com.keep.calm.shopping.helper.JsonHelper;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Product {
 
@@ -86,23 +82,19 @@ public class Product {
     public void addProduct() {
         JsonHelper.addObjectToJsonFile(JsonFileName.PRODUCT,this);
     }
-
     public void deleteProduct() throws IOException {
-        final ObjectMapper objectMapper = new ObjectMapper();
-        ArrayList<Product> objectList = new ArrayList();
-        String filename = JsonFileName.PRODUCT.getValue();
-        String filePath = "src/main/resources/json/" + filename;
-        Product[] obj = objectMapper.readValue(new FileReader( filePath), Product[].class);
-        objectList = new ArrayList(Arrays.asList(obj));
+        ArrayList<Product> objectList = JsonHelper.convertJsonFileToJavaObject(JsonFileName.PRODUCT);
 
         for (Product product : objectList) {
             if (product.getProductId().equals(this.getProductId())) {
-               objectList.remove(product);
+                objectList.remove(product);
                 break;
             }
         }
         JsonHelper.clearJsonFile(JsonFileName.PRODUCT);
         for (Product product : objectList) {
             product.addProduct();
+        }
     }
-}}
+
+}
