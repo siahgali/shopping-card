@@ -1,14 +1,10 @@
 package com.keep.calm.shopping.address;
 
-import com.keep.calm.shopping.cart.Cart;
-import com.keep.calm.shopping.customer.Customer;
 import com.keep.calm.shopping.helper.JsonFileName;
 import com.keep.calm.shopping.helper.JsonHelper;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -21,53 +17,58 @@ public class AddressTest {
     }
 
     @Test
-    public void should_addAddressToJsonFile_when_noError() throws IOException {
+    public void should_addAddressToJsonFile_when_noError() {
         //Initial GIVEN
-        Address address = buildAddress("Montreal");
+        Address address1 = buildAddress("Montreal", "1");
+        Address address2 = buildAddress("Cote Saint-Luc", "2");
 
         //WHEN
-        address.addAddress();
+        address1.addAddress();
+        address2.addAddress();
 
         //then
-        ArrayList addressList = JsonHelper.convertJsonFileToJavaObject(JsonFileName.ADDRESS);
-        assertEquals(1, addressList.size());
-
+        List<Address> addressList = JsonHelper.convertJsonFileToJavaObject(JsonFileName.ADDRESS);
+        assertEquals(2, addressList.size());
     }
 
-//    @Test
-//    public void should_updateAddress() {
-//        //Initial GIVEN
-//        Address address = buildAddress("Montreal");
-//        //WHEN
-//        address.addAddress();
-//
-//        Address addressEntered = buildAddress("Cote saint-luc");
-//
-//        //address.update("1", addressEntered);
-//
-//        assertEquals("Cote saint luc", address.getCity());
-//
-//    }
+    @Test
+    public void should_deleteAddress_when_callDeleteAddress() {
+        //Initial GIVEN
+        Address address1 = buildAddress("Montreal", "1");
+        Address address2 = buildAddress("Cote Saint-Luc", "2");
+        address1.addAddress();
+        address2.addAddress();
 
-    private Address buildAddress(String city) {
+        //WHEN
+        address1.deleteAddress();
+
+        //THEN
+        List<Address> addressList = JsonHelper.convertJsonFileToJavaObject(JsonFileName.ADDRESS);
+        assertEquals(1, addressList.size());
+    }
+
+    @Test
+    public void should_updateAddress_when_callUpdateAddress() {
+        //Initial GIVEN
+        Address address = buildAddress("Montreal", "1");
+        Address addressForUpdate = buildAddress("Cote Saint-Luc", "1");
+        address.addAddress();
+
+        //WHEN
+        addressForUpdate.updateAddress();
+
+        //THEN
+        Address result = JsonHelper.findOneInJsonFile(JsonFileName.ADDRESS, addressForUpdate);
+        assertEquals("Cote Saint-Luc", result.getCity());
+    }
+
+    private Address buildAddress(String city, String addressId) {
         Address address = new Address();
         address.setAddress("René-Lévesque");
-        address.setAddressId("1");
+        address.setAddressId(addressId);
         address.setCity(city);
         address.setCountry("Canada");
         address.setState("Quebec");
-
-        Address billingAddress = new Address();
-        address.setAddress("René-Lévesque");
-        address.setAddressId("1");
-        address.setCity("Montreal");
-        address.setCountry("Canada");
-        address.setState("Quebec");
-
-
-        Cart cart = new Cart();
-        cart.setCartId("1");
-        cart.setTotalPrice(100d);
 
         return address;
     }
