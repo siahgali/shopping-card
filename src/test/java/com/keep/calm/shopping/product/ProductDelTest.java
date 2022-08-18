@@ -6,6 +6,7 @@ import org.junit.Before;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -19,29 +20,25 @@ public class ProductDelTest {
     public void should_addProductToJsonFile_when_noError() throws IOException {
         //Initial GIVEN
         Product product = buildProduct("1","laptop");
-
         //WHEN
         product.addProduct();
-
         //then
-        ArrayList<Product> productList = JsonHelper.convertJsonFileToJavaObject(JsonFileName.PRODUCT);
-
+        List<Product> productList = JsonHelper.convertJsonFileToJavaObject(JsonFileName.PRODUCT);
         assertEquals(1, productList.size());
-
     }
     @org.junit.Test
     public void should_DeleteProductInJsonFile_when_noError() throws IOException, IOException {
         //Initial GIVEN
         Product product1 = buildProduct("1","Laptop");
         //WHEN
-        product1.addProduct();
-
         Product product2 = buildProduct("2","Mouse");
+
+        product1.addProduct();
         product2.addProduct();
 
         product1.deleteProduct();
         //then
-        ArrayList<Product> productList = JsonHelper.convertJsonFileToJavaObject(JsonFileName.PRODUCT);
+        List<Product> productList = JsonHelper.convertJsonFileToJavaObject(JsonFileName.PRODUCT);
         assertEquals(1, productList.size());
 
     }

@@ -1,7 +1,10 @@
 package com.keep.calm.shopping.product;
 
+import com.keep.calm.shopping.address.Address;
 import com.keep.calm.shopping.helper.JsonFileName;
 import com.keep.calm.shopping.helper.JsonHelper;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -82,19 +85,26 @@ public class Product {
     public void addProduct() {
         JsonHelper.addObjectToJsonFile(JsonFileName.PRODUCT,this);
     }
-    public void deleteProduct() throws IOException {
-        ArrayList<Product> objectList = JsonHelper.convertJsonFileToJavaObject(JsonFileName.PRODUCT);
+    public void deleteProduct() {
+        JsonHelper.deleteFromJsonFile(JsonFileName.PRODUCT, this);
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
 
-        for (Product product : objectList) {
-            if (product.getProductId().equals(this.getProductId())) {
-                objectList.remove(product);
-                break;
-            }
+        if (!(obj instanceof Product)) {
+            return false;
         }
-        JsonHelper.clearJsonFile(JsonFileName.PRODUCT);
-        for (Product product : objectList) {
-            product.addProduct();
-        }
+        Product that = (Product) obj;
+        return new EqualsBuilder()
+                .append(this.productId, that.productId)
+                .isEquals();
     }
 
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(this.productId).toHashCode();
+    }
 }

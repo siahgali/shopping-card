@@ -1,11 +1,14 @@
 package com.keep.calm.shopping.product;
 
+import com.keep.calm.shopping.address.Address;
 import com.keep.calm.shopping.helper.JsonFileName;
 import com.keep.calm.shopping.helper.JsonHelper;
 import org.junit.Before;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -24,7 +27,7 @@ public class deleteProductTest {
         product.addProduct();
 
         //then
-        ArrayList<Product> productList = JsonHelper.convertJsonFileToJavaObject(JsonFileName.PRODUCT);
+        List<Product> productList = JsonHelper.convertJsonFileToJavaObject(JsonFileName.PRODUCT);
 
         assertEquals(1, productList.size());
 
@@ -41,7 +44,7 @@ public class deleteProductTest {
 
         product1.deleteProduct();
         //then
-        ArrayList<Product> productList = JsonHelper.convertJsonFileToJavaObject(JsonFileName.PRODUCT);
+        List<Product> productList = JsonHelper.convertJsonFileToJavaObject(JsonFileName.PRODUCT);
         assertEquals(1, productList.size());
 
     }
