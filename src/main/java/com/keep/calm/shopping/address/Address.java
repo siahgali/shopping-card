@@ -1,15 +1,9 @@
 package com.keep.calm.shopping.address;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.keep.calm.shopping.customer.Customer;
 import com.keep.calm.shopping.helper.JsonFileName;
 import com.keep.calm.shopping.helper.JsonHelper;
 import org.apache.commons.lang3.builder.EqualsBuilder;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 public class Address {
 
@@ -72,7 +66,15 @@ public class Address {
         JsonHelper.addObjectToJsonFile(JsonFileName.ADDRESS, this);
     }
 
-     @Override
+    public void deleteAddress() {
+        JsonHelper.deleteFromJsonFile(JsonFileName.ADDRESS, this);
+    }
+
+    public void updateAddress() {
+        JsonHelper.updateJsonFile(JsonFileName.ADDRESS, this);
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;
@@ -85,5 +87,10 @@ public class Address {
         return new EqualsBuilder()
                 .append(this.addressId, that.addressId)
                 .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(this.addressId).toHashCode();
     }
 }
