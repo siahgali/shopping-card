@@ -3,6 +3,8 @@ package com.keep.calm.shopping.product;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.keep.calm.shopping.helper.JsonFileName;
 import com.keep.calm.shopping.helper.JsonHelper;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -91,20 +93,27 @@ public class Product {
         JsonHelper.addObjectToJsonFile(JsonFileName.PRODUCT,this);
     }
     //ArrayList<Product> productList = JsonHelper.convertJsonFileToJavaObject(JsonFileName.PRODUCT);
-
-    public void updateProduct(Product p) throws IOException {
-        ArrayList<Product> objectList = JsonHelper.convertJsonFileToJavaObject(JsonFileName.PRODUCT);
-        for (Product product : objectList) {
-            if (product.getProductId().equals(p.getProductId())) {
-                product.setProductName(p.getProductName());
-                product.setProductId(p.getProductId());
-                break;
-            }
-        }
-            JsonHelper.clearJsonFile(JsonFileName.PRODUCT);
-          for (Product product : objectList) {
-            product.addProduct();
-
-        }
+    public void updateProduct() {
+        JsonHelper.updateJsonFile(JsonFileName.PRODUCT, this);
     }
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+
+        if (!(obj instanceof Product)) {
+            return false;
+        }
+        Product that = (Product) obj;
+        return new EqualsBuilder()
+                .append(this.productId, that.productId)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(this.productId).toHashCode();
+    }
+
 }

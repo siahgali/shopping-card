@@ -1,8 +1,10 @@
 package com.keep.calm.shopping.product;
 
+import com.keep.calm.shopping.address.Address;
 import com.keep.calm.shopping.helper.JsonFileName;
 import com.keep.calm.shopping.helper.JsonHelper;
 import org.junit.Before;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,7 +27,7 @@ public class UpdateProductTest {
         product.addProduct();
 
         //then
-        ArrayList<Product> productList = JsonHelper.convertJsonFileToJavaObject(JsonFileName.PRODUCT);
+        List<Product> productList = JsonHelper.convertJsonFileToJavaObject(JsonFileName.PRODUCT);
 
         assertEquals(1, productList.size());
 
@@ -34,18 +36,15 @@ public class UpdateProductTest {
     public void should_UpdateProductInJsonFile_when_noError() throws IOException {
         //Initial GIVEN
         Product product1 = buildProduct("1","Laptop");
+        Product productforUpdate = buildProduct("2","Mouse");
         //WHEN
         product1.addProduct();
 
-        Product product2 = buildProduct("2","Mouse");
-        product2.addProduct();
-
         //to be updated
-        Product product3 = buildProduct("1","Keyboard");
-        product3.updateProduct(product3);
+        productforUpdate.updateProduct();
         //then
-        ArrayList<Product> productList = JsonHelper.convertJsonFileToJavaObject(JsonFileName.PRODUCT);
-        assertEquals(2, productList.size());
+        Product result = JsonHelper.findOneInJsonFile(JsonFileName.PRODUCT, productforUpdate);
+        assertEquals("Mouse", result.getProductName());
 
     }
 
