@@ -49,15 +49,15 @@ public class JsonHelper<T> {
         String filePath = "src/main/resources/json/" + fileName.getValue();
         try {
             objects = mapper.readValue(new File( filePath), ArrayList.class);
-            
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
         List objectList = new ArrayList();
         switch (fileName) {
-            case ADDRESS: 
-                List<Address> addresses = mapper.convertValue(objects, new TypeReference<>() { }); 
+            case ADDRESS:
+                List<Address> addresses = mapper.convertValue(objects, new TypeReference<>() { });
                 objectList = addresses;
                 break;
             case CUSTOMER:
@@ -74,7 +74,7 @@ public class JsonHelper<T> {
                 break;
 
         }
-        
+
         return objectList;
     }
 
