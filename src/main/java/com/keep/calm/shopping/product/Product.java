@@ -1,5 +1,11 @@
 package com.keep.calm.shopping.product;
 
+import com.keep.calm.shopping.helper.JsonFileName;
+import com.keep.calm.shopping.helper.JsonHelper;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class Product {
 
     private String productId;
@@ -74,4 +80,10 @@ public class Product {
         this.unitStock = unitStock;
     }
 
-}
+    public void addProduct() {
+        JsonHelper.addObjectToJsonFile(JsonFileName.PRODUCT,this);
+    }
+
+
+
+    }
